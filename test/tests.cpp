@@ -2,24 +2,21 @@
 #include <gtest/gtest.h>
 #include "../include/textgen.h"
 
-TEST(mgenerator, test1)
-{
+TEST(mgenerator, test1) {
     MGenerator mgen;
     mgen.read_text("I am Vyacheslav", 2);
     prefix pref = {"I","am"};
     EXPECT_EQ(mgen.statetab.begin()->first, pref);
 }
 
-TEST(mgenerator, test2)
-{
+TEST(mgenerator, test2) {
     MGenerator mgen;
     mgen.read_text("I am Vyacheslav", 2);
     prefix pref = {"I","am"};
     EXPECT_EQ(mgen.statetab[pref][0], "Vyacheslav");
 }
 
-TEST(mgenerator, test3)
-{
+TEST(mgenerator, test3) {
     MGenerator mgen;
     mgen.read_text("I have a cat", 1);
     string text = mgen.generate_text(3);
@@ -28,19 +25,17 @@ TEST(mgenerator, test3)
     ASSERT_TRUE(check);
 }
 
-TEST(mgenerator, test4)
-{
+TEST(mgenerator, test4) {
     MGenerator mgen;
     mgen.read_text("a cat a dog", 1);
     prefix pref = {"a"};
-    EXPECT_EQ(mgen.statetab[pref], {"cat","dog"});
+    vector<string> suf = {"cat","dog"};
+    EXPECT_EQ(mgen.statetab[pref], suf);
 }
 
-TEST(mgenerator, test5)
-{
+TEST(mgenerator, test5) {
     MGenerator mgen;
-    mgen.statetab =
-    {
+    mgen.statetab = {
         {{"i"},{"have"}},
         {{"have"},{"a"}},
         {{"a"},{"cat","dog"}}
