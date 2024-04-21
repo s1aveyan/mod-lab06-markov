@@ -2,18 +2,18 @@
 #include "../include/textgen.h"
 
 void MGenerator::read_file(const char* filename, int n) {
-    ifstream file(filename);
-    string word;
-    string text = "";
+    std::ifstream file(filename);
+    std::string word;
+    std::string text = "";
     while (file >> word) {
         text += word + " ";
     }
     read_text(text, n);
 }
 
-void MGenerator::read_text(string text, int n) {
-    istringstream stream(text);
-    string word;
+void MGenerator::read_text(std::string text, int n) {
+    std::istringstream stream(text);
+    std::string word;
     prefix pref;
     for (int i = 0; i < n; i++) {
         stream >> word;
@@ -27,21 +27,21 @@ void MGenerator::read_text(string text, int n) {
     }
 }
 
-string MGenerator::generate_text(int nwords) {
-    random_device rand;
-    mt19937 mt19(rand());
-    uniform_int_distribution<> distr(0, INT_MAX);
+std::string MGenerator::generate_text(int nwords) {
+    std::random_device rnd;
+    std::mt19937 mt19(rnd());
+    std::uniform_int_distribution<> distr(0, INT_MAX);
     prefix pref = prefixes[distr(mt19) % prefixes.size()];
-    string res = "";
+    std::string res = "";
     for (int i = 0; i < pref.size(); i++) {
         res += pref[i] + " ";
     }
     for (int i = 0; i < nwords-pref.size(); i++) {
-        vector<string> suf = statetab[pref];
+        std::vector<std::string> suf = statetab[pref];
         if (suf.empty()) {
             break;
         }
-        string w = suf[distr(mt19) % suf.size()];
+        std::string w = suf[distr(mt19) % suf.size()];
         pref.pop_front();
         pref.push_back(w);
         res += w + " ";
